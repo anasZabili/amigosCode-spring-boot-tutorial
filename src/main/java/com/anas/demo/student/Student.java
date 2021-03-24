@@ -2,6 +2,7 @@ package com.anas.demo.student;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.Period;
 
 @Entity
 @Table
@@ -18,9 +19,18 @@ public class Student {
   )
   private Long id;
   private String name;
+  // transient specifie que le champs age
+  // ne dois pas etre une colone dans la database
+  // il va etre calculé, ainsi cette info n'apparait pas dans la bdd
+  // mais sera retourné par notre api
+  @Transient
   private int age;
   private LocalDate dob;
   private String email;
+
+  public Student() {
+    super();
+  }
 
   public Long getId() {
     return id;
@@ -43,12 +53,10 @@ public class Student {
   }
 
   public int getAge() {
-    return age;
+    return Period.between(this.dob, LocalDate.now()).getYears();
   }
 
-  public void setAge(int age) {
-    this.age = age;
-  }
+
 
   public String getName() {
     return name;
@@ -63,17 +71,15 @@ public class Student {
   }
 
 
-  public Student(Long id, String name, int age, LocalDate dob, String email) {
+  public Student(Long id, String name, LocalDate dob, String email) {
     this.id = id;
     this.setName(name);
-    this.setAge(age);
     this.setDob(dob);
     this.setEmail(email);
   }
 
-  public Student(String name, int age, LocalDate dob, String email) {
+  public Student(String name, LocalDate dob, String email) {
     this.setName(name);
-    this.setAge(age);
     this.setDob(dob);
     this.setEmail(email);
   }
