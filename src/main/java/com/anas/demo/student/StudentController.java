@@ -5,9 +5,7 @@ import java.time.Month;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 // request mapping ici permet de cette la route de notre api
@@ -20,10 +18,20 @@ public class StudentController {
   public List<Student> getStudent() {
     return studentService.getStudent();
   }
-
+  
   @Autowired
   public StudentController(StudentService studentService) {
     this.studentService = studentService;
+  }
+  
+  @PostMapping
+  public void registerNewStudent(@RequestBody Student student) {
+    this.studentService.addNewStudent(student);
+  }
+
+  @DeleteMapping(path = "{studentId}")
+  public void DeleteStudent(@PathVariable ("studentId") Long studentId) {
+    this.studentService.deleteStudent(studentId);
   }
 
 }
