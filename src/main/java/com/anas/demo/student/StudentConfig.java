@@ -8,6 +8,10 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
 
+
+
+// cette class est excuter avant les autre pour set notre bdd avec
+// des valeurs par default
 @Configuration
 public class StudentConfig {
     @Bean
